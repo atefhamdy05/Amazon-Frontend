@@ -23,7 +23,6 @@ const Login = () => {
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
 
-    // ✅ استبدل FormData بكائن عادي
     const form = {
       username: user.username,
       password: user.password,

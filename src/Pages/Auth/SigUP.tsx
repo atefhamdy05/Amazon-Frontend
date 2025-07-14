@@ -15,7 +15,7 @@ export const SignUp = () => {
 
   const [registerUser, { isLoading, isError, error }] =
     useRegisterUserMutation();
-  const [loginUser] = useLoginUserMutation(); // ← هنا login mutation
+  const [loginUser] = useLoginUserMutation();
 
   const [form, setForm] = useState({
     username: "",
@@ -35,7 +35,6 @@ export const SignUp = () => {
     try {
       await registerUser({ form }).unwrap();
 
-      // تسجيل الدخول التلقائي
       const loginRes = await loginUser({
         form: {
           username: form.username,
@@ -43,11 +42,9 @@ export const SignUp = () => {
         },
       }).unwrap();
 
-      // حفظ التوكنات
       Cookies.set("access_token", loginRes.access);
       Cookies.set("refresh_token", loginRes.refresh);
 
-      // ✅ الآن جلب بيانات المستخدم من /users/me/
       const userRes = await fetch(
         `${import.meta.env.VITE_BASE_URL}/users/me/`,
         {
@@ -64,10 +61,8 @@ export const SignUp = () => {
 
       const userData = await userRes.json();
 
-      // ✅ حفظ بيانات المستخدم في الـ Redux
       dispatch(setAuth(userData));
       toast.success("Logged In Successfully !");
-      // ✅ التوجيه للصفحة الرئيسية
       navigate("/");
     } catch (err) {
       console.error("Registration error:", err);
@@ -79,7 +74,6 @@ export const SignUp = () => {
       <div className="lg:w-[50%] md:w-[70%] rounded-lg p-20 default-shadow bg-white">
         <form className="block" onSubmit={handleSubmit}>
           <h2 className="text-2xl font-bold mb-4 text-center">Sign Up</h2>
-
           {isError && (
             <div className="text-red-700 font-semibold text-center mb-8">
               {"data" in (error as any) &&
@@ -97,7 +91,6 @@ export const SignUp = () => {
                 )}
             </div>
           )}
-
           <label htmlFor="username" className="mb-4 block">
             <span className="text-sm font-medium text-gray-700">Username</span>
             <input
@@ -110,7 +103,6 @@ export const SignUp = () => {
               className="mt-0.5 w-full rounded p-2 border-gray-300 shadow-sm sm:text-sm outline-none border-none"
             />
           </label>
-
           <label htmlFor="full_name" className="mb-4 block">
             <span className="text-sm font-medium text-gray-700">Full Name</span>
             <input
@@ -123,7 +115,6 @@ export const SignUp = () => {
               className="mt-0.5 w-full rounded p-2 border-gray-300 shadow-sm sm:text-sm outline-none border-none"
             />
           </label>
-
           <label htmlFor="email" className="mb-4 block">
             <span className="text-sm font-medium text-gray-700">Email</span>
             <input
@@ -136,7 +127,6 @@ export const SignUp = () => {
               className="mt-0.5 w-full rounded p-2 border-gray-300 shadow-sm sm:text-sm outline-none border-none"
             />
           </label>
-
           <label htmlFor="password" className="mb-4 block">
             <span className="text-sm font-medium text-gray-700">Password</span>
             <input
@@ -149,7 +139,6 @@ export const SignUp = () => {
               className="mt-0.5 w-full rounded p-2 border-gray-300 shadow-sm sm:text-sm outline-none border-none"
             />
           </label>
-
           <label htmlFor="re_password" className="mb-4 block">
             <span className="text-sm font-medium text-gray-700">
               Confirm Password
@@ -164,7 +153,6 @@ export const SignUp = () => {
               className="mt-0.5 w-full rounded p-2 border-gray-300 shadow-sm sm:text-sm outline-none border-none"
             />
           </label>
-
           <button
             type="submit"
             disabled={isLoading}
@@ -172,8 +160,7 @@ export const SignUp = () => {
           >
             {isLoading ? "Registering..." : "Sign Up"}
           </button>
-
-          {/* زر للانتقال إلى صفحة تسجيل الدخول */}
+          س{" "}
           <p className="mt-6 text-center text-sm">
             Already have an account?{" "}
             <button
