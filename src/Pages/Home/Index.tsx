@@ -1,10 +1,11 @@
+import ProductList from "../../Components/Products/ProductList";
 
 const Index = () => {
   return (
-    <div>
-      Home
+    <div className="max-w-6xl mx-auto">
+      <ProductList />
     </div>
-  )
-}
+  );
+};
 
-export default Index
+export default Index;
