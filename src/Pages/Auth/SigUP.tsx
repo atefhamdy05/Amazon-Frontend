@@ -7,6 +7,7 @@ import { useState } from "react";
 import { useAppDispatch } from "../../redux/hooks";
 import { setAuth } from "../../redux/features/authSlice";
 import Cookies from "js-cookie";
+import { toast } from "react-toastify";
 
 export const SignUp = () => {
   const navigate = useNavigate();
@@ -65,7 +66,7 @@ export const SignUp = () => {
 
       // ✅ حفظ بيانات المستخدم في الـ Redux
       dispatch(setAuth(userData));
-
+      toast.success("Logged In Successfully !");
       // ✅ التوجيه للصفحة الرئيسية
       navigate("/");
     } catch (err) {
@@ -74,87 +75,117 @@ export const SignUp = () => {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="max-w-md mx-auto mt-8 p-6 bg-white rounded shadow"
-    >
-      <h2 className="text-2xl font-bold mb-4 text-center">Sign Up</h2>
+    <div className="flex justify-center items-center h-screen">
+      <div className="lg:w-[50%] md:w-[70%] rounded-lg p-20 default-shadow bg-white">
+        <form className="block" onSubmit={handleSubmit}>
+          <h2 className="text-2xl font-bold mb-4 text-center">Sign Up</h2>
 
-      <input
-        type="text"
-        name="username"
-        value={form.username}
-        onChange={handleChange}
-        placeholder="Username"
-        className="mb-3 w-full p-2 border rounded"
-        required
-      />
+          {isError && (
+            <div className="text-red-700 font-semibold text-center mb-8">
+              {"data" in (error as any) &&
+                typeof (error as any).data === "object" && (
+                  <ul>
+                    {Object.entries(
+                      (error as any).data as Record<string, string[] | string>
+                    ).map(([field, message], index) => (
+                      <li key={index}>
+                        <strong>{field}:</strong>{" "}
+                        {Array.isArray(message) ? message.join(", ") : message}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+            </div>
+          )}
 
-      <input
-        type="text"
-        name="full_name"
-        value={form.full_name}
-        onChange={handleChange}
-        placeholder="Full Name"
-        className="mb-3 w-full p-2 border rounded"
-        required
-      />
+          <label htmlFor="username" className="mb-4 block">
+            <span className="text-sm font-medium text-gray-700">Username</span>
+            <input
+              type="text"
+              name="username"
+              id="username"
+              value={form.username}
+              onChange={handleChange}
+              required
+              className="mt-0.5 w-full rounded p-2 border-gray-300 shadow-sm sm:text-sm outline-none border-none"
+            />
+          </label>
 
-      <input
-        type="email"
-        name="email"
-        value={form.email}
-        onChange={handleChange}
-        placeholder="Email"
-        className="mb-3 w-full p-2 border rounded"
-        required
-      />
+          <label htmlFor="full_name" className="mb-4 block">
+            <span className="text-sm font-medium text-gray-700">Full Name</span>
+            <input
+              type="text"
+              name="full_name"
+              id="full_name"
+              value={form.full_name}
+              onChange={handleChange}
+              required
+              className="mt-0.5 w-full rounded p-2 border-gray-300 shadow-sm sm:text-sm outline-none border-none"
+            />
+          </label>
 
-      <input
-        type="password"
-        name="password"
-        value={form.password}
-        onChange={handleChange}
-        placeholder="Password"
-        className="mb-3 w-full p-2 border rounded"
-        required
-      />
+          <label htmlFor="email" className="mb-4 block">
+            <span className="text-sm font-medium text-gray-700">Email</span>
+            <input
+              type="email"
+              name="email"
+              id="email"
+              value={form.email}
+              onChange={handleChange}
+              required
+              className="mt-0.5 w-full rounded p-2 border-gray-300 shadow-sm sm:text-sm outline-none border-none"
+            />
+          </label>
 
-      <input
-        type="password"
-        name="re_password"
-        value={form.re_password}
-        onChange={handleChange}
-        placeholder="Confirm Password"
-        className="mb-3 w-full p-2 border rounded"
-        required
-      />
+          <label htmlFor="password" className="mb-4 block">
+            <span className="text-sm font-medium text-gray-700">Password</span>
+            <input
+              type="password"
+              name="password"
+              id="password"
+              value={form.password}
+              onChange={handleChange}
+              required
+              className="mt-0.5 w-full rounded p-2 border-gray-300 shadow-sm sm:text-sm outline-none border-none"
+            />
+          </label>
 
-      {isError && (
-        <div className="text-red-500 mb-2">
-          {"data" in (error as any) &&
-            typeof (error as any).data === "object" && (
-              <ul>
-                {Object.entries(
-                  (error as any).data as Record<string, string[] | string>
-                ).map(([field, message], index) => (
-                  <li key={index}>
-                    <strong>{field}:</strong>{" "}
-                    {Array.isArray(message) ? message.join(", ") : message}
-                  </li>
-                ))}
-              </ul>
-            )}
-        </div>
-      )}
+          <label htmlFor="re_password" className="mb-4 block">
+            <span className="text-sm font-medium text-gray-700">
+              Confirm Password
+            </span>
+            <input
+              type="password"
+              name="re_password"
+              id="re_password"
+              value={form.re_password}
+              onChange={handleChange}
+              required
+              className="mt-0.5 w-full rounded p-2 border-gray-300 shadow-sm sm:text-sm outline-none border-none"
+            />
+          </label>
 
-      <button
-        type="submit"
-        disabled={isLoading}
-        className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
-      >
-        {isLoading ? "Registering..." : "Sign Up"}
-      </button>
-    </form>
+          <button
+            type="submit"
+            disabled={isLoading}
+            className="cursor-pointer mt-8 inline-block rounded-sm border border-indigo-600 bg-indigo-600 px-12 py-3 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:ring-3 focus:outline-hidden w-full"
+          >
+            {isLoading ? "Registering..." : "Sign Up"}
+          </button>
+
+          {/* زر للانتقال إلى صفحة تسجيل الدخول */}
+          <p className="mt-6 text-center text-sm">
+            Already have an account?{" "}
+            <button
+              type="button"
+              onClick={() => navigate("/auth/login/")}
+              className="text-indigo-600 hover:underline"
+            >
+              Login
+            </button>
+          </p>
+        </form>
+      </div>
+    </div>
   );
 };
