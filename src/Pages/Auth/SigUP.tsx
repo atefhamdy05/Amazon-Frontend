@@ -45,15 +45,12 @@ export const SignUp = () => {
       Cookies.set("access_token", loginRes.access);
       Cookies.set("refresh_token", loginRes.refresh);
 
-      const userRes = await fetch(
-        `${import.meta.env.VITE_BASE_URL}/users/me/`,
-        {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${loginRes.access}`,
-          },
-        }
-      );
+      const userRes = await fetch(`${import.meta.env.VITE_BASE_URL}users/me/`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${loginRes.access}`,
+        },
+      });
 
       if (!userRes.ok) {
         throw new Error("Failed to fetch user info");
@@ -159,8 +156,7 @@ export const SignUp = () => {
             className="cursor-pointer mt-8 inline-block rounded-sm border border-indigo-600 bg-indigo-600 px-12 py-3 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:ring-3 focus:outline-hidden w-full"
           >
             {isLoading ? "Registering..." : "Sign Up"}
-          </button>
-          س{" "}
+          </button>{" "}
           <p className="mt-6 text-center text-sm">
             Already have an account?{" "}
             <button
