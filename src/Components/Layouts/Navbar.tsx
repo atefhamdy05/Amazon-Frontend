@@ -36,16 +36,16 @@ const Navbar = () => {
               <li>
                 <a
                   className="text-gray-500 transition hover:text-gray-500/75 dark:text-white dark:hover:text-white/75"
-                  href="#"
+                  href="/"
                 >
-                  About
+                  Home
                 </a>
               </li>
 
               <li>
                 <a
                   className="text-gray-500 transition hover:text-gray-500/75 dark:text-white dark:hover:text-white/75"
-                  href="#"
+                  href="/"
                 >
                   Careers
                 </a>
@@ -54,7 +54,7 @@ const Navbar = () => {
               <li>
                 <a
                   className="text-gray-500 transition hover:text-gray-500/75 dark:text-white dark:hover:text-white/75"
-                  href="#"
+                  href="/"
                 >
                   History
                 </a>
@@ -63,7 +63,7 @@ const Navbar = () => {
               <li>
                 <a
                   className="text-gray-500 transition hover:text-gray-500/75 dark:text-white dark:hover:text-white/75"
-                  href="#"
+                  href="/"
                 >
                   Services
                 </a>
@@ -72,7 +72,7 @@ const Navbar = () => {
               <li>
                 <a
                   className="text-gray-500 transition hover:text-gray-500/75 dark:text-white dark:hover:text-white/75"
-                  href="#"
+                  href="/"
                 >
                   Projects
                 </a>
@@ -81,7 +81,7 @@ const Navbar = () => {
               <li>
                 <a
                   className="text-gray-500 transition hover:text-gray-500/75 dark:text-white dark:hover:text-white/75"
-                  href="#"
+                  href="/"
                 >
                   Blog
                 </a>
@@ -91,14 +91,28 @@ const Navbar = () => {
 
           <div className="flex items-center gap-4">
             {isAuthenticated ? (
-              <div className="sm:flex sm:gap-4">
+              <>
+                <div className="sm:flex sm:gap-4">
+                  <button
+                    className=" block cursor-pointer rounded-md bg-teal-600 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-teal-700 dark:hover:bg-teal-500"
+                    onClick={logout}
+                  >
+                    log out{" "}
+                  </button>
+                </div>
                 <button
-                  className="block cursor-pointer rounded-md bg-teal-600 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-teal-700 dark:hover:bg-teal-500"
-                  onClick={logout}
+                  className="block  rounded-md bg-teal-600 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-teal-700 dark:hover:bg-teal-500"
+                  type="button"
+                  onClick={() => navigate("/product/add/")}
                 >
-                  {user?.username}
+                  Add Product
                 </button>
-              </div>
+                <div className="sm:flex sm:gap-4">
+                  <button className="block cursor-pointer rounded-md bg-teal-600 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-teal-700 dark:hover:bg-teal-500">
+                    {user?.username}
+                  </button>
+                </div>
+              </>
             ) : (
               <div className="sm:flex sm:gap-4">
                 <button

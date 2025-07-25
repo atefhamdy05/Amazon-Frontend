@@ -7,6 +7,7 @@ import { Login } from "./Pages/Auth";
 import { HomePage } from "./Pages/Home";
 import Layout from "./Pages/Home/Layout.tsx";
 import { SignUp } from "./Pages/Auth/SigUP.tsx";
+import AddProduct from "./Components/Products/AddProduct.tsx";
 import {
   IsAuthOrRedirect,
   IsNotAuthOrRedirect,
@@ -17,14 +18,6 @@ const router = createBrowserRouter([
     path: "",
     element: <Layout />,
     children: [
-      {
-        element: (
-          <IsAuthOrRedirect>
-            <HomePage />
-          </IsAuthOrRedirect>
-        ),
-        index: true,
-      },
       {
         element: <HomePage />,
         index: true,
@@ -49,6 +42,19 @@ const router = createBrowserRouter([
               <IsNotAuthOrRedirect>
                 <SignUp />
               </IsNotAuthOrRedirect>
+            ),
+          },
+        ],
+      },
+      {
+        path: "product",
+        children: [
+          {
+            path: "add",
+            element: (
+              <IsAuthOrRedirect>
+                <AddProduct />
+              </IsAuthOrRedirect>
             ),
           },
         ],

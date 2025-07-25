@@ -15,7 +15,7 @@ export const IsAuthOrRedirect = ({
     if (!isAuthenticated && !isLoading) {
       navigate("/auth/login");
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, isLoading]);
 
   return children;
 };

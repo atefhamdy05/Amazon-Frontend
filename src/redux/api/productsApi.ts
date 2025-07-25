@@ -12,6 +12,15 @@ const usersApiSlice = apiSlice.injectEndpoints({
         },
       }),
     }),
+
+    createProduct: builder.mutation({
+      query: (formData: FormData) => ({
+        url: base_url,
+        method: "POST",
+        body: formData,
+      }),
+    }),
   }),
 });
 export const { useList_productQuery } = usersApiSlice;
+export const { useCreateProductMutation } = usersApiSlice;
